@@ -78,7 +78,7 @@ const submitStory = async () => {
   const payload = {
     title: selectedPost?.title ?? "",
     type: "artwork",
-    postId: selectedPost?._id,
+    postId: String(selectedPost?._id),
     text: story.artwork.body,
     period: selectedPost?.period ?? "",
     author: currentUsername.value,

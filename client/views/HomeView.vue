@@ -8,7 +8,7 @@ import Button from "primevue/button";
 import { ref } from "vue";
 
 const { isLoggedIn } = storeToRefs(useUserStore());
-const chooseEraSection = ref(null);
+const chooseEraSection = ref<HTMLElement | null>(null);
 
 function scrollToChooseEra() {
   if (chooseEraSection.value) {
