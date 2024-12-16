@@ -16,27 +16,36 @@ async function register() {
 </script>
 
 <template>
-  <form class="pure-form pure-form-aligned" @submit.prevent="register">
-    <h3>Register User</h3>
-    <fieldset>
-      <div class="pure-control-group">
-        <label for="aligned-name">Username</label>
-        <input v-model.trim="username" type="text" id="aligned-name" placeholder="Username" required />
-      </div>
-      <div class="pure-control-group">
-        <label for="aligned-password">Password</label>
-        <input type="password" v-model.trim="password" id="aligned-password" placeholder="Password" required />
-      </div>
-      <div class="pure-controls">
-        <button type="submit" class="pure-button pure-button-primary">Register</button>
-      </div>
-    </fieldset>
-  </form>
+  <PrimeForm @submit="register" :validateOnBlur="true" class="register-form">
+    <!-- Username Field -->
+    <div class="username">
+      <div>Username:</div>
+      <PrimeInputText v-model="username" type="text" placeholder="Username" fluid />
+    </div>
+    <!-- Password Field -->
+    <div class="password">
+      <div>Password:</div>
+      <PrimeInputText v-model="password" type="password" placeholder="Password" fluid />
+    </div>
+    <!-- Submit Button -->
+    <PrimeButton type="submit" severity="secondary" label="Register" class="submit" />
+  </PrimeForm>
 </template>
 
 <style scoped>
-h3 {
+.register-form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.username,
+.password {
   display: flex;
   justify-content: center;
+  align-items: center;
+  gap: 15px;
 }
 </style>

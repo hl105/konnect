@@ -2,10 +2,16 @@ import { storeToRefs } from "pinia";
 import { createRouter, createWebHistory } from "vue-router";
 
 import { useUserStore } from "@/stores/user";
+import AboutView from "../views/AboutView.vue";
+import ContactView from "../views/ContactView.vue";
+import ContributeView from "../views/ContributeView.vue";
+import CreateStoryView from "../views/CreateStoryView.vue";
+import EraView from "../views/EraView.vue";
 import HomeView from "../views/HomeView.vue";
 import LoginView from "../views/LoginView.vue";
 import NotFoundView from "../views/NotFoundView.vue";
-import SettingView from "../views/SettingView.vue";
+import ProfileView from "../views/ProfileView.vue";
+import StoryView from "../views/StoryView.vue";
 
 const router = createRouter({
   history: createWebHistory(),
@@ -14,12 +20,55 @@ const router = createRouter({
       path: "/",
       name: "Home",
       component: HomeView,
+      meta: { requiresAuth: false },
+    },
+    // {
+    //   path: "/setting",
+    //   name: "Settings",
+    //   component: SettingView,
+    //   meta: { requiresAuth: true },
+    // },CreateStory
+    {
+      path: "/create-story",
+      name: "CreateStory",
+      component: CreateStoryView,
+      meta: { requiresAuth: true },
     },
     {
-      path: "/setting",
-      name: "Settings",
-      component: SettingView,
+      path: "/profile",
+      name: "Profile",
+      component: ProfileView,
       meta: { requiresAuth: true },
+    },
+    {
+      path: "/about",
+      name: "About",
+      component: AboutView,
+      meta: { requiresAuth: false },
+    },
+    {
+      path: "/contribute",
+      name: "Contribute",
+      component: ContributeView,
+      meta: { requiresAuth: true },
+    },
+    {
+      path: "/contact",
+      name: "Contact",
+      component: ContactView,
+      meta: { requiresAuth: false },
+    },
+    {
+      path: "/story/:storyId",
+      name: "Story",
+      component: StoryView,
+      props: true,
+    },
+    {
+      path: "/era/:eraName",
+      name: "Era",
+      component: EraView,
+      props: true,
     },
     {
       path: "/login",
@@ -29,7 +78,7 @@ const router = createRouter({
       beforeEnter: (to, from) => {
         const { isLoggedIn } = storeToRefs(useUserStore());
         if (isLoggedIn.value) {
-          return { name: "Settings" };
+          return { name: "Home" };
         }
       },
     },

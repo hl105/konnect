@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import router from "@/router";
 import { useToastStore } from "@/stores/toast";
 import { useUserStore } from "@/stores/user";
 import { storeToRefs } from "pinia";
@@ -17,36 +18,45 @@ onBeforeMount(async () => {
     await userStore.updateSession();
   } catch {
     // User is not logged in
+    console.log("something went wrong while updating session");
   }
 });
+
+const navigateTo = async (viewName: string) => {
+  await router.push({ name: viewName });
+};
 </script>
 
 <template>
   <header>
-    <nav>
-      <div class="title">
-        <img src="@/assets/images/logo.svg" />
-        <RouterLink :to="{ name: 'Home' }">
-          <h1>Social Media App</h1>
-        </RouterLink>
-      </div>
+    <nav v-if="currentRouteName !== 'Login'">
+      <h1 class="title" @click="navigateTo('Home')">Konnect</h1>
       <ul>
-        <li>
-          <RouterLink :to="{ name: 'Home' }" :class="{ underline: currentRouteName == 'Home' }"> Home </RouterLink>
-        </li>
+        <li @click="navigateTo('About')">About</li>
+        <li @click="navigateTo('Contribute')">Contribute</li>
         <li v-if="isLoggedIn">
-          <RouterLink :to="{ name: 'Settings' }" :class="{ underline: currentRouteName == 'Settings' }"> Settings </RouterLink>
+          <div :to="{ name: 'Profile' }" :class="{ underline: currentRouteName == 'Profile' }" class="profile-link">
+            <i class="pi pi-user"></i>
+            <!-- icon -->
+            <span @click="navigateTo('Profile')">Profile</span>
+          </div>
         </li>
         <li v-else>
-          <RouterLink :to="{ name: 'Login' }" :class="{ underline: currentRouteName == 'Login' }"> Login </RouterLink>
+          <div :to="{ name: 'Login' }" :class="{ underline: currentRouteName == 'Login' }" class="profile-link">
+            <i class="pi pi-user"></i>
+            <span @click="navigateTo('Login')">Login</span>
+          </div>
         </li>
       </ul>
     </nav>
-    <article v-if="toast !== null" class="toast" :class="toast.style">
+    <!-- <article v-if="toast !== null" class="toast" :class="toast.style">
       <p>{{ toast.message }}</p>
-    </article>
+    </article> -->
   </header>
   <RouterView />
+  <!-- Background shapes -->
+  <!-- <div class="background-shapes"></div> -->
+  <div class="background"></div>
 </template>
 
 <style scoped>
@@ -54,14 +64,16 @@ onBeforeMount(async () => {
 
 nav {
   padding: 1em 2em;
-  background-color: lightgray;
   display: flex;
   align-items: center;
+  cursor: pointer;
 }
 
 h1 {
   font-size: 2em;
   margin: 0;
+  color: #0f147f;
+  cursor: pointer;
 }
 
 .title {
@@ -89,7 +101,22 @@ ul {
   gap: 1em;
 }
 
-.underline {
-  text-decoration: underline;
+.profile-link {
+  display: flex; /* Aligns icon and text horizontally */
+  align-items: center; /* Vertically centers the icon and text */
+  gap: 0.5rem; /* Adjusts the spacing between the icon and the text */
+  text-decoration: none; /* Optional: Remove underline from the link */
+  color: inherit; /* Matches the text color with the theme */
+}
+
+.background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to bottom, #ffffff, #0b6db7);
+  overflow: hidden;
+  z-index: -3;
 }
 </style>

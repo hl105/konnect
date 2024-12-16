@@ -1,4 +1,51 @@
 <script setup lang="ts">
+const props = defineProps(["post", "selectButton", "era"]);
+const emit = defineEmits(["select"]);
+const post = props.post;
+</script>
+
+<template>
+  <PrimeCard class="post-card">
+    <template #header>
+      <img :src="post.primaryImage" alt="Post Image" class="post-image" />
+    </template>
+    <template #title>
+      <h3>{{ post.title }}</h3>
+    </template>
+    <template #content>
+      <p>Period: {{ post.period }}</p>
+    </template>
+    <template #footer>
+      <div class="flex gap-4 mt-1">
+        <PrimeButton v-if="selectButton && !era" label="select" class="p-button-primary mt-2" @click="emit('select', post)" />
+        <PrimeButton v-if="selectButton && era" label="explore ✨" class="p-button-primary mt-2" @click="emit('select', post)" />
+      </div>
+    </template>
+  </PrimeCard>
+</template>
+
+<style scoped>
+.post-card {
+  text-align: center;
+  border-radius: 12px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.post-image {
+  width: 100%;
+  height: 200px;
+  object-fit: contain;
+  background-color: var(--p-primary-900);
+}
+
+.mt-2 {
+  margin-top: 0.5rem;
+}
+</style>
+<!-- <script setup lang="ts">
 import { useUserStore } from "@/stores/user";
 import { formatDate } from "@/utils/formatDate";
 import { storeToRefs } from "pinia";
@@ -68,4 +115,4 @@ menu {
 .base article:only-child {
   margin-left: auto;
 }
-</style>
+</style> -->

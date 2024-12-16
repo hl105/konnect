@@ -1,8 +1,19 @@
-/* Add some global styles here! */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
 
+/* Add some global styles here! */
 :root {
   --red: rgb(208, 67, 12);
   --base-bg: #f1f3f5;
+  font-family: 'Poppins', sans-serif;
+  background-color: #EBEFFF;
+  text-align: center;
+}
+
+html, body {
+  height: auto;
+  min-height: 100%;
+  margin: 0;
+  overflow-x: hidden; /* Prevent horizontal overflow */
 }
 
 button.btn-small {
@@ -30,3 +41,4 @@ a.button {
   align-items: center;
   gap: 1em;
 }
+
