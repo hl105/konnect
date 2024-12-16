@@ -63,12 +63,14 @@ const router = createRouter({
       name: "Story",
       component: StoryView,
       props: true,
+      meta: { requiresAuth: false },
     },
     {
       path: "/era/:eraName",
       name: "Era",
       component: EraView,
       props: true,
+      meta: { requiresAuth: false },
     },
     {
       path: "/login",

@@ -1,13 +1,10 @@
 <script setup lang="ts">
 import ChooseEra from "@/components/Post/ChooseEra.vue";
 import ExampleStories from "@/components/Story/ExampleStories.vue";
-import { useUserStore } from "@/stores/user";
-import { storeToRefs } from "pinia";
 import "primeicons/primeicons.css";
 import Button from "primevue/button";
 import { ref } from "vue";
 
-const { isLoggedIn } = storeToRefs(useUserStore());
 const chooseEraSection = ref<HTMLElement | null>(null);
 
 function scrollToChooseEra() {
@@ -20,7 +17,7 @@ function scrollToChooseEra() {
 <template>
   <main>
     <section>
-      <h1 v-if="isLoggedIn" class="hero-container">
+      <h1 class="hero-container">
         <!-- Hero Section -->
         <section class="hero-section">
           <h1 class="main-heading">

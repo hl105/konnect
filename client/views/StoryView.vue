@@ -6,18 +6,23 @@ import { useRoute } from "vue-router";
 import { StoryDoc } from "../../server/concepts/storying";
 import { fetchy } from "../utils/fetchy";
 const images = computed(() => {
-  if (!selectedPost || !selectedPost.additionalImages) return [];
-  return selectedPost.additionalImages.map((imgUrl, index) => ({
+  console.log("Computing images for selectedPost:", selectedPost.value); // Debug computed logic
+  if (!selectedPost.value || !selectedPost.value.additionalImages || !selectedPost.value.title) {
+    console.warn("Images computation failed: missing required fields in selectedPost.");
+    return [];
+  }
+  return selectedPost.value.additionalImages.map((imgUrl, index) => ({
     itemImageSrc: imgUrl,
     thumbnailImageSrc: imgUrl,
-    alt: `${selectedPost.title}-additional-${index}`,
-    title: selectedPost.title,
+    alt: `${selectedPost.value.title}-additional-${index}`,
+    title: selectedPost.value.title,
   }));
 });
 
 const route = useRoute();
 const postStore = usePostStore();
-const selectedPost = postStore.selectedPost as MetObjectData;
+const selectedPost = ref(postStore.selectedPost || ({} as MetObjectData));
+console.log("Initial selectedPost:", selectedPost.value); // Debug initial state
 
 const artworkStory = ref<StoryDoc | null>(null);
 const contextStories = ref<StoryDoc[]>([]);
@@ -25,8 +30,11 @@ const contextStories = ref<StoryDoc[]>([]);
 onBeforeMount(async () => {
   try {
     const storyId = route.params.storyId as string;
+    console.log("Fetching artwork story for storyId:", storyId);
     artworkStory.value = await fetchy(`/api/stories/${storyId}`, "GET");
+    console.log("Fetched artworkStory:", artworkStory.value);
     contextStories.value = await fetchy(`/api/stories/artwork/${storyId}/contexts`, "GET");
+    console.log("Fetched contextStories:", contextStories.value);
     processStoryText();
   } catch (error: any) {
     console.error("Error fetching story:", error);
@@ -47,7 +55,10 @@ interface TextSegment {
 const textSegments = ref<TextSegment[]>([]);
 
 const processStoryText = () => {
-  if (!artworkStory.value) return;
+  if (!artworkStory.value) {
+    console.warn("artworkStory is null, skipping processStoryText.");
+    return;
+  }
   const rawText = artworkStory.value.text;
 
   // Split logic: find phrases and create segments
@@ -116,7 +127,7 @@ const navigateToHome = async () => {
 </script>
 
 <template>
-  <div v-if="!artworkStory" class="loading">Loading story...</div>
+  <div v-if="!artworkStory || !selectedPost" class="loading">Loading story...</div>
   <div v-else class="story-view">
     <div class="post-display">
       <div class="image-section">
