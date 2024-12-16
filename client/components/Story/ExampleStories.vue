@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import router from "@/router";
 import { onMounted, ref } from "vue";
 
 const box = ref<HTMLElement | null>(null); // Reference to the .box element
@@ -31,19 +30,19 @@ onMounted(() => {
   }
 });
 
-const navigateTo = async (storyId: string) => {
-  await router.push({ name: "Story", params: { storyId: storyId } });
-};
+// const navigateTo = async (storyId: string) => {
+//   await router.push({ name: "Story", params: { storyId: storyId } });
+// };
 </script>
 
 <template>
   <div ref="box" class="box">
-    <div class="item" @click="navigateTo('675fadd3400e0aef87133283')"><img src="https://i.imgur.com/71xXgt4.png" /></div>
-    <div class="item" @click="navigateTo('675f9eef400e0aef87133282')"><img src="https://i.imgur.com/iXX1954.png" /></div>
-    <div class="item" @click="navigateTo('675fb471400e0aef87133284')"><img src="https://i.imgur.com/5QVJDVg.png" /></div>
-    <div class="item" @click="navigateTo('675fb8ee400e0aef87133285')"><img src="https://i.imgur.com/tq0cPHu.png" /></div>
-    <div class="item" @click="navigateTo('675fbd38400e0aef87133286')"><img src="https://i.imgur.com/sXIlyeN.png" /></div>
-    <div class="item" @click="navigateTo('675fc4c6400e0aef87133287')"><img src="https://i.imgur.com/QoeqPZi.png" /></div>
+    <div class="item"><img src="https://i.imgur.com/71xXgt4.png" /></div>
+    <div class="item"><img src="https://i.imgur.com/iXX1954.png" /></div>
+    <div class="item"><img src="https://i.imgur.com/5QVJDVg.png" /></div>
+    <div class="item"><img src="https://i.imgur.com/tq0cPHu.png" /></div>
+    <div class="item"><img src="https://i.imgur.com/sXIlyeN.png" /></div>
+    <div class="item"><img src="https://i.imgur.com/QoeqPZi.png" /></div>
   </div>
   <div class="buttons">
     <span ref="prevButton" class="prev"></span>
