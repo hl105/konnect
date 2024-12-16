@@ -49,6 +49,7 @@
   "dependencies": {
     "@primevue/forms": "^4.2.4",
     "@primevue/themes": "^4.2.4",
+    "axios": "^1.7.9",
     "connect-mongo": "^5.0.0",
     "cors": "^2.8.5",
     "dompurify": "^3.2.2",
