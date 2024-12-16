@@ -1,29 +1,4 @@
-<script setup lang="ts">
-import { useUserStore } from "@/stores/user";
-import { ref } from "vue";
-const userStore = useUserStore();
-
-const images = ref([
-  {
-    itemImageSrc: "https://i.imgur.com/Y7ZUx2E.jpeg",
-    thumbnailImageSrc: "https://i.imgur.com/Y7ZUx2E.jpeg",
-    alt: "sea turtle",
-    title: "Source: Sea Turtle Conservatory",
-  },
-  {
-    itemImageSrc: "https://i.imgur.com/JCchgC1.png",
-    thumbnailImageSrc: "https://i.imgur.com/JCchgC1.png",
-    alt: "dark sky",
-    title: "International Dark Sky Association",
-  },
-  {
-    itemImageSrc: "https://i.imgur.com/EBgb2d4.jpeg",
-    thumbnailImageSrc: "https://i.imgur.com/EBgb2d4.jpeg",
-    alt: "dark sky",
-    title: "WVU Planetarium - West Virginia University",
-  },
-]);
-</script>
+<script setup lang="ts"></script>
 
 <template>
   <main>
@@ -107,7 +82,7 @@ li {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
->>> .p-panel-header {
+:deep(.p-panel-header) {
   color: var(--p-primary-800);
   font-size: 2rem;
   font-weight: bold;
