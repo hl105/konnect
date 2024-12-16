@@ -29,10 +29,10 @@ const createStory = async (post: MetObjectData) => {
   <div class="text" v-if="props.era">Choose a Met Artwork to Explore</div>
   <div class="text" v-else>Choose a Met Artwork</div>
   <div class="card-grid" v-if="props.era">
-    <PostComponent v-for="post in posts" :key="post._id" :post="post" :selectButton="true" :era="true" @select="goToStory" />
+    <PostComponent v-for="post in posts" :key="String(post._id)" :post="post" :selectButton="true" :era="true" @select="goToStory" />
   </div>
   <div class="card-grid" v-else>
-    <PostComponent v-for="post in posts" :key="post._id" :post="post" :selectButton="true" :era="false" @select="createStory" />
+    <PostComponent v-for="post in posts" :key="String(post._id)" :post="post" :selectButton="true" :era="false" @select="createStory" />
   </div>
 </template>
 
