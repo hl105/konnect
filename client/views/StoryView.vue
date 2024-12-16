@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import router from "@/router";
 import { MetObjectData, usePostStore } from "@/stores/post";
-import { computed, onMounted, ref } from "vue";
+import { computed, onBeforeMount, ref } from "vue";
 import { useRoute } from "vue-router";
 import { StoryDoc } from "../../server/concepts/storying";
 import { fetchy } from "../utils/fetchy";
@@ -16,15 +16,15 @@ const images = computed(() => {
 });
 
 const route = useRoute();
-const storyId = route.params.storyId as string;
 const postStore = usePostStore();
 const selectedPost = postStore.selectedPost as MetObjectData;
 
 const artworkStory = ref<StoryDoc | null>(null);
 const contextStories = ref<StoryDoc[]>([]);
 
-onMounted(async () => {
+onBeforeMount(async () => {
   try {
+    const storyId = route.params.storyId as string;
     artworkStory.value = await fetchy(`/api/stories/${storyId}`, "GET");
     contextStories.value = await fetchy(`/api/stories/artwork/${storyId}/contexts`, "GET");
     processStoryText();
@@ -57,13 +57,10 @@ const processStoryText = () => {
 
   contextStories.value.forEach((context) => {
     const phrase = context.title;
-    console.log("phrase", phrase);
     const escapedPhrase = escapeRegExp(phrase);
     const regex = new RegExp(`\\b(${escapedPhrase})\\b`, "g");
     let match;
-    console.log("MATCH", regex);
     while ((match = regex.exec(rawText)) !== null) {
-      console.log("match", match);
       const phraseStart = match.index;
       const phraseEnd = phraseStart + match[0].length;
 
